@@ -1,87 +1,122 @@
+#include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
-#include <stddef.h>
-#include "main.h"
-
-void print_buffer(char buffer[], int *buff_ind);
 
 /**
-* handle_percent_format - Handles the format after encountering '%'
-* @format: The format string
-* @i: Pointer to the current index in the format string
-* @list: va_list
-* @buffer: Array to store characters
-*
-* Return: Number of characters printed
+* print_number - Prints an integer.
+* @n: The integer to be printed.
 */
-static int handle_percent_format(const char *format, int *i,
-va_list list, char buffer[])
+void print_number(int n)
 {
-int flags, width, precision, size;
-int printed;
-
-flags = get_flags(format, i);
-width = get_width(format, i, list);
-precision = get_precision(format, i, list);
-size = get_size(format, i);
-++(*i);
-
-printed = handle_print(format, i, list, buffer, flags, width, precision, size);
-if (printed == -1)
-return (-1);
-
-return (printed);
+char c;
+if (n < 0)
+{
+write(1, "-", 1);
+n = -n;
+}
+if (n / 10)
+print_number(n / 10);
+c = n % 10 + '0';
+write(1, &c, 1);
 }
 
 /**
-* _printf - Printf function
-* @format: format.
-* Return: Printed chars.
+* print_binary - Prints the binary representation of a number.
+* @n: The number to be printed in binary.
+*/
+void print_binary(unsigned int n)
+{
+char c;
+if (n / 2)
+print_binary(n / 2);
+c = n % 2 + '0';
+write(1, &c, 1);
+}
+
+/**
+* _printf - Produces output according to a format.
+* @format: The format string that specifies how subsequent arguments are converted for output.
+*
+* Return: The number of characters printed.
 */
 int _printf(const char *format, ...)
 {
-int i, printed_chars = 0;
-int buff_ind = 0;
-va_list list;
-char buffer[BUFF_SIZE];
+va_list args;
+int count = 0;
+int i;
+int j;
+int n;
+int temp;
+char c;
+char *s;
 
-if (format == NULL)
-return (-1);
+va_start(args, format);
 
-va_start(list, format);
-
-for (i = 0; format && format[i] != '\0'; i++)
+for (i = 0; format[i]; i++)
 {
 if (format[i] != '%')
 {
-buffer[buff_ind++] = format[i];
-if (buff_ind == BUFF_SIZE)
-print_buffer(buffer, &buff_ind);
-printed_chars++;
+write(1, &format[i], 1);
+count++;
 }
 else
 {
-print_buffer(buffer, &buff_ind);
-printed_chars += handle_percent_format(format, &i, list, buffer);
-}
-}
-
-print_buffer(buffer, &buff_ind);
-
-va_end(list);
-
-return (printed_chars);
-}
-
-/**
-* print_buffer - Prints the contents of the buffer if it exists.
-* @buffer: Array of chars
-* @buff_ind: Index at which to add the next char, represents the length.
-*/
-void print_buffer(char buffer[], int *buff_ind)
+i++;
+switch (format[i])
 {
-if (*buff_ind > 0)
-write(1, &buffer[0], *buff_ind);
+case 'c':
+{
+c = va_arg(args, int);
+write(1, &c, 1);
+count++;
+break;
+}
+case 's':
+{
+s = va_arg(args, char *);
+for (j = 0; s[j]; j++, count++)
+write(1, &s[j], 1);
+break;
+}
+case '%':
+write(1, &format[i], 1);
+count++;
+break;
+case 'd':
+case 'i':
+{
+n = va_arg(args, int);
+if (n < 0)
+count++;
+temp = n;
+do
+{
+count++;
+temp /= 10;
+} while (temp);
+print_number(n);
+break;
+}
+case 'b':
+{
+unsigned int n = va_arg(args, unsigned int);
+temp = n;
+do
+{
+count++;
+temp /= 2;
+} while (temp);
+print_binary(n);
+break;
+}
+default:
+write(1, &format[i - 1], 2);
+count += 2;
+break;
+}
+}
+}
 
-*buff_ind = 0;
+va_end(args);
+return (count);
 }
