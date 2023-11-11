@@ -1,5 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
+
 #include <stdarg.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -43,8 +44,9 @@ struct fmt
 typedef struct fmt fmt_t;
 
 int _printf(const char *format, ...);
-int handle_print(const char *fmt, int *i,
-va_list list, char buffer[], int flags, int width, int precision, int size);
+void print_buffer(char buffer[], int *buff_ind);
+int handle_print(const char *format, int *i, va_list list, char buffer[],
+	int flags, int width, int precision, int size);
 
 /****************** FUNCTIONS ******************/
 
