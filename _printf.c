@@ -1,41 +1,74 @@
-#include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
+#include "main.h"
+
 /**
-* _printf - Custom printf function with limited functionality
-* @format: Format string
-*
-* Return: Number of characters printed (excluding null byte)
+* _printf - a function that produces output according to a format
+* @format: character string (to be parsed)
+* Return: the number of characters printed (excluding the null byte)
 */
-int _printf(const char *format, ...) {
+int _printf(const char *format, ...)
+{
 va_list args;
 int count = 0;
-char *str;
+
 va_start(args, format);
-while (*format) {
-if (*format == '%' && *(format + 1) != '\0') {
-switch (*(format + 1)) {
+for (int i = 0; format[i] != '\0'; i++)
+{
+if (format[i] != '%')
+{
+write(1, &format[i], 1);
+count++;
+}
+else
+{
+i++;
+switch (format[i])
+{
 case 'c':
-count += write(1, &(char){va_arg(args, int)}, 1);
+{
+char c = va_arg(args, int);
+
+write(1, &c, 1);
+count++;
 break;
+}
 case 's':
-str = va_arg(args, char *);
-while (*str) {
-count += write(1, str++, 1);
+{
+char *s = va_arg(args, char *);
+
+for (int j = 0; s[j] != '\0'; j++)
+{
+write(1, &s[j], 1);
+count++;
 }
 break;
+}
 case '%':
-count += write(1, "%", 1);
-break;
-default:
-count += write(1, format, 1);
+{
+write(1, &format[i], 1);
+count++;
 break;
 }
-format += 2; // Move to the next character after the specifier
-} else {
-count += write(1, format++, 1);
+case 'd':
+case 'i':
+{
+int num = va_arg(args, int);
+char str[12]; /* Buffer big enough for an int. */
+sprintf(str, "%d", num); /* Convert the int to a string. */
+
+for (int j = 0; str[j] != '\0'; j++)
+{
+write(1, &str[j], 1);
+count++;
+}
+break;
+}
+default:
+break;
+}
 }
 }
 va_end(args);
+return (count);
 }
-return count;
