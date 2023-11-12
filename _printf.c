@@ -1,17 +1,77 @@
 #include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
+
 /**
-* _printf - Produces output according to a format.
-* @format: The format string that specifies how subsequent arguments
-* are converted for output.
-* Return: The number of characters printed.
+* handle_format - handle format specifiers
+* @format: format string
+* @i: current index in format string
+* @args: list of arguments
+* @count: pointer to count of characters
+*
+* Description: This function handles format specifiers.
+*/
+void handle_format(const char *format, int i, va_list args, int *count)
+{
+switch (format[i])
+{
+case 'c':
+handle_char(args, count);
+break;
+case 's':
+handle_string(args, count);
+break;
+case '%':
+handle_percent(count);
+break;
+case 'd':
+case 'i':
+handle_int(args, count);
+break;
+case 'b':
+handle_binary(args, count);
+break;
+case 'u':
+handle_unsigned_(args, count);
+break;
+case 'o':
+handle_octal(args, count);
+break;
+case 'x':
+handle_hex(args, count, 0);
+break;
+case 'X':
+handle_hex(args, count, 1);
+break;
+case 'p':
+handle_pointer(args, count);
+break;
+default:
+write(1, &format[i - 1], 2);
+*count += 2;
+break;
+}
+}
+
+/**
+* _printf - formatted output conversion and print
+* @format: character string composed of zero or more directives
+*
+* Description: This function writes output to stdout,
+* the standard output stream.
+* It returns the number of characters written,
+* or negative value if an error occurs.
+*
+* Return: the number of characters written
 */
 int _printf(const char *format, ...)
-{va_list args;
+{
+va_list args;
 int count = 0;
 int i;
+
 va_start(args, format);
+
 for (i = 0; format[i]; i++)
 {
 if (format[i] != '%')
@@ -22,31 +82,10 @@ count++;
 else
 {
 i++;
-switch (format[i])
-{
-case 'c':
-handle_char(args, &count);
-break;
-case 's':
-handle_string(args, &count);
-break;
-case '%':
-handle_percent(&count);
-break;
-case 'd':
-case 'i':
-handle_int(args, &count);
-break;
-case 'b':
-handle_binary(args, &count);
-break;
-default:
-write(1, &format[i - 1], 2);
-count += 2;
-break;
+handle_format(format, i, args, &count);
 }
 }
-}
+
 va_end(args);
 return (count);
 }
