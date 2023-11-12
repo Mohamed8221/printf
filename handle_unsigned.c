@@ -4,12 +4,12 @@
 #include <stdio.h>
 
 /**
-* print_number - prints an unsigned int
+* print_unsigned_number - prints an unsigned int
 * @n: number to print
 *
 * Description: This function prints an unsigned int.
 */
-void print_number(int n)
+void print_unsigned_number(unsigned int n)
 {
 if (n / 10)
 print_number(n / 10);
@@ -34,5 +34,5 @@ do {
 temp /= 10;
 } while (temp);
 
-print_number(n);
+print_unsigned_number(n);
 }
