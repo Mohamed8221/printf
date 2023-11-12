@@ -11,11 +11,17 @@
 */
 void print_octal(unsigned int n)
 {
+char str[10];
+int i = 0;
+
 if (n / 8)
 print_octal(n / 8);
-putchar((n % 8) + '0');
-}
 
+str[i++] = (n % 8) + '0';
+str[i] = '\0';
+
+write(1, str, i);
+}
 /**
 * handle_octal - handle octal numbers
 * @args: list of arguments
@@ -27,7 +33,7 @@ putchar((n % 8) + '0');
 void handle_octal(va_list args, int *count)
 {
 unsigned int n = va_arg(args, unsigned int);
-int temp = n;
+unsigned int temp = n;
 
 do {
 (*count)++;
