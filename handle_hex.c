@@ -45,3 +45,35 @@ temp /= 16;
 
 print_hex(n, uppercase);
 }
+
+/**
+* handle_long_hex - Handles the 'x' and 'X' specifiers for long unsigned int
+* @args: The va_list of arguments
+* @count: Pointer to count of characters
+* @uppercase: Flag to determine if the hex digits should be uppercase
+*
+* Description: This function handles the 'x' and 'X'
+* format specifiers for long unsigned int.
+*/
+void handle_long_hex(va_list args, int *count, int uppercase)
+{
+unsigned long int n = va_arg(args, unsigned long int);
+print_hex(n, uppercase);
+*count += count_digits(n);
+}
+
+/**
+* handle_short_hex - Handles the 'x' and 'X' specifiers for short unsigned int
+* @args: The va_list of arguments
+* @count: Pointer to count of characters
+* @uppercase: Flag to determine if the hex digits should be uppercase
+*
+* Description: This function handles the 'x' and 'X'
+* format specifiers for short unsigned int.
+*/
+void handle_short_hex(va_list args, int *count, int uppercase)
+{
+unsigned int n = (unsigned short int)va_arg(args, unsigned int);
+print_hex(n, uppercase);
+*count += count_digits(n);
+}

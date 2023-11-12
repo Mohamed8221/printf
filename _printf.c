@@ -15,55 +15,12 @@ void handle_format(const char *format, int i, va_list args, int *count)
 {
 int plus_flag = 0;
 int space_flag = 0;
-if (format[i] == '+')
-{
-plus_flag = 1;
-i++;
-}
-else if (format[i] == ' ')
-{
-space_flag = 1;
-i++;
-}
+int long_flag = 0;
+int short_flag = 0;
 
-switch (format[i])
-{
-case 'c':
-handle_char(args, count);
-break;
-case 's':
-handle_string(args, count);
-break;
-case '%':
-handle_percent(count);
-break;
-case 'd':
-case 'i':
-handle_int(args, count, plus_flag, space_flag);
-break;
-case 'b':
-handle_binary(args, count);
-break;
-case 'u':
-handle_unsigned_(args, count);
-break;
-case 'o':
-handle_octal(args, count);
-break;
-case 'x':
-handle_hex(args, count, 0);
-break;
-case 'X':
-handle_hex(args, count, 1);
-break;
-case 'p':
-handle_pointer(args, count);
-break;
-default:
-write(1, &format[i - 1], 2);
-*count += 2;
-break;
-}
+set_flags(format, &i, &plus_flag, &space_flag, &long_flag, &short_flag);
+handle_specifier(format, i, args, count, plus_flag, space_flag,
+long_flag, short_flag);
 }
 
 /**

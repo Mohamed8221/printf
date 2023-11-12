@@ -42,3 +42,33 @@ temp /= 8;
 
 print_octal(n);
 }
+
+/**
+* handle_long_octal - Handles the 'o' specifier for long unsigned int
+* @args: The va_list of arguments
+* @count: Pointer to count of characters
+*
+* Description: This function handles the 'o' format
+* specifier for long unsigned int.
+*/
+void handle_long_octal(va_list args, int *count)
+{
+unsigned long int n = va_arg(args, unsigned long int);
+print_octal(n);
+*count += count_digits(n);
+}
+
+/**
+* handle_short_octal - Handles the 'o' specifier for short unsigned int
+* @args: The va_list of arguments
+* @count: Pointer to count of characters
+*
+* Description: This function handles the 'o' format
+* specifier for short unsigned int.
+*/
+void handle_short_octal(va_list args, int *count)
+{
+unsigned int n = (unsigned short int)va_arg(args, unsigned int);
+print_octal(n);
+*count += count_digits(n);
+}

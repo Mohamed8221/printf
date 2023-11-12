@@ -10,6 +10,9 @@
 void handle_char(va_list args, int *count)
 {
 char c = va_arg(args, int);
+if (c >= 32 && c < 127)
+{
 write(1, &c, 1);
 (*count)++;
+}
 }

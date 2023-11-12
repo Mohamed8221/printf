@@ -41,3 +41,35 @@ temp /= 10;
 
 print_unsigned_number(n);
 }
+
+/**
+* handle_long_unsigned_ - Handles the 'u' specifier for long unsigned int
+* @args: The va_list of arguments
+* @count: Pointer to count of characters
+*
+* Description: This function handles the 'u' format
+* specifier for long unsigned int.
+*/
+
+void handle_long_unsigned_(va_list args, int *count)
+{
+unsigned long int n = va_arg(args, unsigned long int);
+print_unsigned_number(n);
+*count += count_digits(n);
+}
+
+/**
+* handle_short_unsigned_ - Handles the 'u' specifier for short unsigned int
+* @args: The va_list of arguments
+* @count: Pointer to count of characters
+*
+* Description: This function handles the 'u' format
+* specifier for short unsigned int.
+*/
+
+void handle_short_unsigned_(va_list args, int *count)
+{
+unsigned int n = (unsigned short int)va_arg(args, unsigned int);
+print_unsigned_number(n);
+*count += count_digits(n);
+}
