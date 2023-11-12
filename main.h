@@ -21,7 +21,7 @@ void print_binary(unsigned int n);
 void handle_char(va_list args, int *count);
 void handle_string(va_list args, int *count);
 void handle_percent(int *count);
-void handle_int(va_list args, int *count);
+void handle_int(va_list args, int *count, int plus_flag, int space_flag);
 void handle_binary(va_list args, int *count);
 void handle_unsigned_(va_list args, int *count);
 void handle_octal(va_list args, int *count);

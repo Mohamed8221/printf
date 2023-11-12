@@ -13,6 +13,19 @@
 */
 void handle_format(const char *format, int i, va_list args, int *count)
 {
+int plus_flag = 0;
+int space_flag = 0;
+if (format[i] == '+')
+{
+plus_flag = 1;
+i++;
+}
+else if (format[i] == ' ')
+{
+space_flag = 1;
+i++;
+}
+
 switch (format[i])
 {
 case 'c':
@@ -26,7 +39,7 @@ handle_percent(count);
 break;
 case 'd':
 case 'i':
-handle_int(args, count);
+handle_int(args, count, plus_flag, space_flag);
 break;
 case 'b':
 handle_binary(args, count);
