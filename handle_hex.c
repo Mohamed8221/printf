@@ -11,11 +11,17 @@
 */
 void print_hex(unsigned long n, int uppercase)
 {
+char str[10];
+int i = 0;
 char *hex = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
 
 if (n / 16)
 print_hex(n / 16, uppercase);
-putchar(hex[n % 16]);
+
+str[i++] = hex[n % 16];
+str[i] = '\0';
+
+write(1, str, i);
 }
 
 /**
@@ -30,7 +36,7 @@ putchar(hex[n % 16]);
 void handle_hex(va_list args, int *count, int uppercase)
 {
 unsigned int n = va_arg(args, unsigned int);
-int temp = n;
+unsigned int temp = n;
 
 do {
 (*count)++;
