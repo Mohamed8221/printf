@@ -13,8 +13,10 @@
 */
 void handle_pointer(va_list args, int *count)
 {
-void *p = va_arg(args, void *);
+void *ptr = va_arg(args, void *);
+unsigned long ptr_val = (unsigned long)ptr;
+
 write(1, "0x", 2);
 (*count) += 2;
-print_hex((unsigned long)p, 0);
+print_hex(ptr_val, 0);
 }
