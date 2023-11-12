@@ -9,11 +9,16 @@
 *
 * Description: This function prints an unsigned int.
 */
+
 void print_unsigned_number(unsigned int n)
 {
+char str[10];
+int i = 0;
 if (n / 10)
-print_number(n / 10);
-putchar((n % 10) + '0');
+print_unsigned_number(n / 10);
+str[i++] = (n % 10) + '0';
+str[i] = '\0';
+write(1, str, i);
 }
 
 /**
