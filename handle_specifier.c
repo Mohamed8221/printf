@@ -16,8 +16,7 @@
 * any flags that have been set to the handling function.
 */
 void handle_specifier_helper(char format_char, va_list args, int *count,
-int plus_flag, int space_flag,
-int long_flag, int short_flag)
+int plus_flag, int space_flag, int long_flag, int short_flag)
 {
 switch (format_char)
 {
@@ -37,16 +36,14 @@ write(1, "r", 1);
 break;
 case 'd':
 case 'i':
-handle_int_specifier(args, count, plus_flag, space_flag,
-long_flag, short_flag);
+handle_int_specifier(args, count, plus_flag,
+space_flag, long_flag, short_flag);
 break;
 case 'b':
 handle_binary(args, count);
 break;
-case 'u':
-case 'o':
-case 'x':
-case 'X':
+case 'o': case 'u':
+case 'X': case 'x':
 handle_unsigned_specifier(format_char, args, count,
 long_flag, short_flag);
 break;
