@@ -30,6 +30,11 @@ break;
 case '%':
 handle_percent(count);
 break;
+case 'r':
+write(1, "%", 1);
+write(1, "r", 1);
+(*count) += 2;
+break;
 case 'd':
 case 'i':
 handle_int_specifier(args, count, plus_flag, space_flag,
