@@ -35,6 +35,7 @@ temp /= 10;
 } while (temp);
 
 print_number(n);
+(*count)++;
 }
 
 /**
