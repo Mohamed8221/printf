@@ -10,10 +10,6 @@
 void handle_binary(va_list args, int *count)
 {
 unsigned int n = va_arg(args, unsigned int);
-int temp = n;
-do {
-(*count)++;
-temp /= 2;
-} while (temp);
 print_binary(n);
+(*count)++;
 }
