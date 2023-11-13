@@ -9,32 +9,11 @@
 * @plus_flag: add flag.
 * @space_flag: for flag.
 */
-void handle_int(va_list args, int *count, int plus_flag, int space_flag)
+void handle_int(va_list args, int *count)
 {
 int n = va_arg(args, int);
-int temp;
-if (n < 0)
-{
-(*count)++;
-}
-else if (n >= 0 && plus_flag)
-{
-write(1, "+", 1);
-(*count)++;
-}
-else if (n >= 0 && space_flag)
-{
-write(1, " ", 1);
-(*count)++;
-}
-
-temp = n;
-do {
-(*count)++;
-temp /= 10;
-} while (temp);
-
 print_number(n);
+(*count)++;
 }
 
 /**
