@@ -10,11 +10,11 @@
 void handle_string(va_list args, int *count)
 {
 char *s = va_arg(args, char *);
-int j;
 if (s == NULL)
-{
 s = "(null)";
+while (*s)
+{
+write(1, s++, 1);
+(*count)++;
 }
-for (j = 0; s[j]; j++, (*count)++)
-write(1, &s[j], 1);
 }
