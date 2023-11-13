@@ -80,7 +80,7 @@ handle_long_int(args, count, plus_flag, space_flag);
 else if (short_flag)
 handle_short_int(args, count, plus_flag, space_flag);
 else
-handle_int(args, count);
+handle_int(args, count, plus_flag, space_flag);
 }
 
 /**
