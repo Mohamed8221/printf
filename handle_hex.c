@@ -11,17 +11,11 @@
 */
 void print_hex(unsigned long n, int uppercase)
 {
-char str[10];
-int i = 0;
-char *hex = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
-
+char c;
 if (n / 16)
 print_hex(n / 16, uppercase);
-
-str[i++] = hex[n % 16];
-str[i] = '\0';
-
-write(1, str, i);
+c = n % 16 < 10 ? n % 16 + '0' : n % 16 - 10 + (uppercase ? 'A' : 'a');
+write(1, &c, 1);
 }
 
 /**

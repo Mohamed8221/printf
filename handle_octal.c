@@ -11,16 +11,11 @@
 */
 void print_octal(unsigned int n)
 {
-char str[10];
-int i = 0;
-
+char c;
 if (n / 8)
 print_octal(n / 8);
-
-str[i++] = (n % 8) + '0';
-str[i] = '\0';
-
-write(1, str, i);
+c = n % 8 + '0';
+write(1, &c, 1);
 }
 /**
 * handle_octal - handle octal numbers

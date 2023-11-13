@@ -12,13 +12,11 @@
 
 void print_unsigned_number(unsigned int n)
 {
-char str[10];
-int i = 0;
+char c;
 if (n / 10)
 print_unsigned_number(n / 10);
-str[i++] = (n % 10) + '0';
-str[i] = '\0';
-write(1, str, i);
+c = n % 10 + '0';
+write(1, &c, 1);
 }
 
 /**
