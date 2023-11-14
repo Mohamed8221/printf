@@ -16,6 +16,7 @@ typedef struct print
 
 int _printf(const char *format, ...);
 void print_number(int n);
+void print_int(va_list args);
 void print_unsigned_number(unsigned int n);
 void print_binary(unsigned int n);
 void print_hex(unsigned long n, int uppercase);

@@ -92,3 +92,55 @@ print_octal(' ');
 print_number(n);
 *count += count_digits(n);
 }
+
+/**
+* print_int - Prints an integer
+* @args: The va_list of arguments
+*
+* Description: This function prints an integer to the standard output.
+*/
+void print_int(va_list args)
+{
+int n = va_arg(args, int);
+char buffer[1024];
+int i = 1023;
+int negative = n < 0;
+
+if (negative)
+n = -n;
+
+do {
+buffer[i--] = n % 10 + '0';
+n /= 10;
+} while (n > 0);
+
+if (negative)
+buffer[i--] = '-';
+
+write(1, buffer + i + 1, 1023 - i);
+}
+
+/**
+* print_pointer - Prints a pointer address
+* @args: The va_list of arguments
+*
+* Description: This function prints a pointer address to the standard output.
+*/
+void print_pointer(va_list args)
+{
+void *ptr = va_arg(args, void *);
+char buffer[1024];
+unsigned long n = (unsigned long)ptr;
+int i = 1023;
+
+do {
+int digit = n % 16;
+buffer[i--] = digit < 10 ? digit + '0' : digit - 10 + 'a';
+n /= 16;
+} while (n > 0);
+
+buffer[i--] = 'x';
+buffer[i--] = '0';
+
+write(1, buffer + i + 1, 1023 - i);
+}
